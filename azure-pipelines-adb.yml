@@ -1,6 +1,9 @@
 trigger:
 - main
 
+variables:
+- group: 'mlops-workshop'
+
 stages:
 - stage: BuildModelTraining
   jobs:
@@ -19,7 +22,7 @@ stages:
 
     - script: |
         pip install databricks-api
-        python pipeline/databricks-model-training-automation.py $(TOKEN)
+        python pipeline/databricks-model-training-automation.py $(adb_token)
       displayName: 'Model training'
 - stage: ReleaseModelDeployment
   dependsOn: BuildModelTraining

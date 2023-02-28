@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: green
-endpoint_name: mlops-hudua-134-alias2
-model: azureml:mlopsmodeltraining:7
+endpoint_name: endpoint-workshop
+model: azureml:mlopsmodel:1
 code_configuration:
   code: scoring
   scoring_script: score.py

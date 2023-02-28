@@ -13,5 +13,4 @@ pickle.dump(model, open('./model.pkl', 'wb'))
 model = Model.register(workspace = ws,
                        model_name="mlopsmodeltraining",
                        model_path = "./model.pkl",
-                       description = 'Regression Model'
-                      )
+                       description = 'Regression Model')
