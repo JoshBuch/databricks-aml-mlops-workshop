@@ -21,8 +21,7 @@ stages:
         architecture: 'x64'
 
     - script: |
-        pip install databricks-api
-        python pipeline/databricks-model-training-automation.py $(adb_token) $(Build.BuildNumber)
+        echo hello world!
       displayName: 'Model training'
 - stage: ReleaseModelDeployment
   dependsOn: BuildModelTraining
@@ -38,6 +37,6 @@ stages:
         az account show
         az extension add -n ml
         az account set -s $(subscription_id)
-        az configure --defaults workspace=$(learningmain) group=$(Learning)
+        az configure --defaults workspace=$(workspace_name) group=$(resource_group) location=$(location)
         az ml online-endpoint create  -f aml/endpoint.yml
         az ml online-deployment create  -f aml/deployment.yml
