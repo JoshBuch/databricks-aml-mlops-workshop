@@ -22,7 +22,7 @@ stages:
 
     - script: |
         pip install databricks-api
-        python pipeline/databricks-model-training-automation.py $(adb_token)
+        python pipeline/databricks-model-training-automation.py $(adb_token) $(Build.BuildNumber)
       displayName: 'Model training'
 - stage: ReleaseModelDeployment
   dependsOn: BuildModelTraining
