@@ -6,6 +6,6 @@ code_configuration:
   code: scoring
   scoring_script: score.py
 environment:
-  image: amlacrhudua.azurecr.io/repo/deploy-env:v1
+  image: mcr.microsoft.com/azureml/curated/sklearn-0.24-ubuntu18.04-py37-cpu:latest
 instance_type: Standard_DS2_v2
 instance_count: 1
