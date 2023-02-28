@@ -5,7 +5,7 @@ from azureml.core.runconfig import RunConfiguration
 from azureml.pipeline.steps import PythonScriptStep
 from azureml.pipeline.core import PipelineParameter, StepSequence, Pipeline
 
-
+import os
 
 subscription_id = 'dac8073e-1c2d-4a7d-a53b-c3655e291d58'
 resource_group = 'Learning'
@@ -24,9 +24,11 @@ env.python.user_managed_dependencies = True
 run_config = RunConfiguration()
 run_config.environment = env
 
+print(os.system('!pwd'))
+
 run_step = PythonScriptStep(script_name="main_script.py",
                             compute_target=aml_compute,
-                            source_directory='program',
+                            source_directory='./program',
                             runconfig = run_config,
                             allow_reuse = False)
 
