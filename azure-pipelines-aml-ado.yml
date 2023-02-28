@@ -19,6 +19,7 @@ stages:
         versionSpec: '3.8'
         addToPath: true
         architecture: 'x64'
+        scriptType: ps
         inlineScript: |
           az --version
           az account show
