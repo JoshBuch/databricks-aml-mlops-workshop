@@ -123,7 +123,6 @@ resource_group = 'Learning'
 #         resource_group=resource_group
 # )
 
-# az login --service-principal  --username 09049807-bacc-4ff9-aeed-4ac3a17695f0 --password K5v8Q~XpXfZ.CXR7tLw2hVVBRPZs8HiCcLKRTbvq --tenant 16b3c013-d300-468d-ac64-7eda0820b6d3
 from azureml.core.authentication import ServicePrincipalAuthentication
 
 svc_pr_password = "K5v8Q~XpXfZ.CXR7tLw2hVVBRPZs8HiCcLKRTbvq" # os.environ.get("AZUREML_PASSWORD")
