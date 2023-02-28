@@ -29,7 +29,7 @@ print(os.system('ls -lah'))
 
 run_step = PythonScriptStep(script_name="main_script.py",
                             compute_target=aml_compute,
-                            source_directory='./program',
+                            source_directory='aml/training/pipeline/program',
                             runconfig = run_config,
                             allow_reuse = False)
 
