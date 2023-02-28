@@ -13,9 +13,9 @@ workspace_name = 'learningmain'
 
 ws = Workspace(subscription_id, resource_group, workspace_name)
 
-aml_compute = AmlCompute(ws, "testcluster")
+aml_compute = AmlCompute(ws, "cpu-cluster")
 
-env = Environment('New_env_name')
+env = Environment('workshop-env')
 
 env.docker.base_image = 'mcr.microsoft.com/azureml/curated/sklearn-0.24-ubuntu18.04-py37-cpu:latest'
 env.python.user_managed_dependencies = True
