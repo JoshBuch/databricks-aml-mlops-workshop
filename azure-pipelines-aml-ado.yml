@@ -17,10 +17,13 @@ stages:
         architecture: 'x64'
 
     - script: |
+        az login --service-principal  --username $(sp_id) --password $(sp_secret) --tenant $(sp_tenant_id)
+        az account show
+        
         pip install azureml-core
         pip install azureml-pipeline-core
         pip install azureml-pipeline-steps
-        az login --service-principal  --username $(sp_id) --password $(sp_secret) --tenant $(sp_tenant_id)
+
         python aml/training/pipeline/main.py
       displayName: 'Model training'
 
