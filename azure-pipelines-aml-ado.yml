@@ -14,20 +14,22 @@ stages:
     steps:
 
     - task: UsePythonVersion@0
+      displayName: 'Model training'
       inputs:
         azureSubscription: '$(azure_svc_name)'
         versionSpec: '3.8'
         addToPath: true
         architecture: 'x64'
-        scriptType: ps
+        scriptLocation: inlineScript
+        scriptType: bash
         inlineScript: |
           az --version
           az account show
+          echo '$(azure_svc_name)'
           pip install azureml-core
           pip install azureml-pipeline-core
           pip install azureml-pipeline-steps
           python aml/training/pipeline/main.py
-        displayName: 'Model training'
 # - stage: ReleaseModelDeployment
 #   dependsOn: BuildModelTraining
 #   jobs:
