@@ -34,9 +34,10 @@ stages:
 
     steps:
     - script: |
-        az login
+        az login --service-principal  --username $(sp_id) --password $(sp_secret) --tenant $(sp_tenant_id)
+        az account show
         az extension add -n ml
-        az account set -s "<subscription name>"
-        az configure --defaults workspace=amlworkshopacename group=rgname
+        az account set -s $(subscription_id)
+        az configure --defaults workspace=$(learningmain) group=$(Learning)
         az ml online-endpoint create  -f aml/endpoint.yml
         az ml online-deployment create  -f aml/deployment.yml
