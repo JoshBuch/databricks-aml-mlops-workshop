@@ -20,16 +20,19 @@ stages:
         addToPath: true
         architecture: 'x64'
         azureSubscription: '$(azure_svc_name)'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az account show'
 
-    - script: |
-          az --version
-          az account show
-          echo '$(azure_svc_name)'
-          pip install azureml-core
-          pip install azureml-pipeline-core
-          pip install azureml-pipeline-steps
-          python aml/training/pipeline/main.py
-          
+
+    # - script: |
+    #       az --version
+    #       az account show
+    #       echo '$(azure_svc_name)'
+    #       pip install azureml-core
+    #       pip install azureml-pipeline-core
+    #       pip install azureml-pipeline-steps
+    #       python aml/training/pipeline/main.py
+
 # - stage: ReleaseModelDeployment
 #   dependsOn: BuildModelTraining
 #   jobs:
