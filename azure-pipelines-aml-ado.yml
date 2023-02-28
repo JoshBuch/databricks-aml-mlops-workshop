@@ -1,8 +1,5 @@
 trigger: none
 
-variables:
-- group: mlops-workshop
-
 stages:
 - stage: BuildModelTraining
   jobs:
@@ -14,24 +11,19 @@ stages:
     steps:
 
     - task: UsePythonVersion@0
-      displayName: 'Model training'        
       inputs:
-        versionSpec: '3.x'
+        versionSpec: '3.8'
         addToPath: true
         architecture: 'x64'
-        azureSubscription: $(azure_svc_name)
-        scriptLocation: inlineScript
-        inlineScript: az account show
 
+    - script: |
+        pip install azureml-core
+        pip install azureml-pipeline-core
+        pip install azureml-pipeline-steps
+        az login --service-principal  --username $(sp_id) --password $(sp_secret) --tenant $(sp_tenant_id)
+        python aml/training/pipeline/main.py
+      displayName: 'Model training'
 
-    # - script: |
-    #       az --version
-    #       az account show
-    #       echo '$(azure_svc_name)'
-    #       pip install azureml-core
-    #       pip install azureml-pipeline-core
-    #       pip install azureml-pipeline-steps
-    #       python aml/training/pipeline/main.py
 
 # - stage: ReleaseModelDeployment
 #   dependsOn: BuildModelTraining
