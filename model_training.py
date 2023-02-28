@@ -179,5 +179,6 @@ except:
 model = Model.register(workspace = ws,
                        model_name="mlopsmodel",
                        model_path = "model.pkl",
-                       description = 'Regression Model'
+                       description = 'Regression Model',
+                       tags={'source': 'databricks'}
                       )
