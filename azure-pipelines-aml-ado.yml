@@ -19,9 +19,9 @@ stages:
         versionSpec: '3.x'
         addToPath: true
         architecture: 'x64'
-        azureSubscription: '$(azure_svc_name)'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'az account show'
+        azureSubscription: $(azure_svc_name)
+        scriptLocation: inlineScript
+        inlineScript: az account show
 
 
     # - script: |
