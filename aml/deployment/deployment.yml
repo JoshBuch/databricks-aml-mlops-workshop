@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: green
-endpoint_name: endpoint-workshop
+endpoint_name: endpoint-workshop-2
 model: azureml:mlopsmodel:1
 code_configuration:
   code: scoring
