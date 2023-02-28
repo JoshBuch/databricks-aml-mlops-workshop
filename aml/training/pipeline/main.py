@@ -5,9 +5,11 @@ from azureml.core.runconfig import RunConfiguration
 from azureml.pipeline.steps import PythonScriptStep
 from azureml.pipeline.core import PipelineParameter, StepSequence, Pipeline
 
-subscription_id = ''
-resource_group = ''
-workspace_name = ''
+
+
+subscription_id = 'dac8073e-1c2d-4a7d-a53b-c3655e291d58'
+resource_group = 'Learning'
+workspace_name = 'learningmain'
 
 ws = Workspace(subscription_id, resource_group, workspace_name)
 
@@ -15,7 +17,7 @@ aml_compute = AmlCompute(ws, "testcluster")
 
 env = Environment('New_env_name')
 
-env.docker.base_image = '.azurecr.io/repo/train-env:v1'
+env.docker.base_image = 'mcr.microsoft.com/azureml/curated/sklearn-0.24-ubuntu18.04-py37-cpu:latest'
 env.python.user_managed_dependencies = True
 
 # create a new runconfig object
