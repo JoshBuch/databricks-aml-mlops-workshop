@@ -24,7 +24,8 @@ env.python.user_managed_dependencies = True
 run_config = RunConfiguration()
 run_config.environment = env
 
-print(os.system('!pwd'))
+print(os.system('pwd'))
+print(os.system('ls -lah'))
 
 run_step = PythonScriptStep(script_name="main_script.py",
                             compute_target=aml_compute,
