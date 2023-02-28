@@ -39,5 +39,5 @@ stages:
         az extension add -n ml
         az account set -s $(subscription_id)
         az configure --defaults workspace=$(workspace_name) group=$(resource_group) location=$(location)
-        az ml online-endpoint create  -f aml/endpoint.yml
-        az ml online-deployment create  -f aml/deployment.yml
+        az ml online-endpoint create  -f aml/deployment/endpoint.yml
+        az ml online-deployment create  -f aml/deployment/deployment.yml
