@@ -1,4 +1,5 @@
-trigger: none
+trigger:
+- main
 
 variables:
 - group: 'mlops-workshop'

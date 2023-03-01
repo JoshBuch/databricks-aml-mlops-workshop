@@ -6,7 +6,7 @@ tokenuser = sys.argv[1]
 build_id = sys.argv[2]
 
 db = DatabricksAPI(
-    host="https://adb-7959016608908952.12.azuredatabricks.net//",
+    host="https://adb-7959016608908952.12.azuredatabricks.net/",
     token=tokenuser
 )
 
