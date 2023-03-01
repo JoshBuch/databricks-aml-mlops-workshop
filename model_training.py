@@ -7,7 +7,6 @@ print('this is a live test at 3:33pm Wednesday')
 
 # COMMAND ----------
 
-# COMMAND ----------
 
 workspace_name = dbutils.widgets.get("workspace_name")
 subscription_id = dbutils.widgets.get("subscription_id")
@@ -16,6 +15,7 @@ service_principal_id = dbutils.widgets.get("service_principal_id")
 tenant_id = dbutils.widgets.get("tenant_id")
 svc_pr_password = dbutils.widgets.get("svc_pr_password")
 
+# COMMAND ----------
 
 # MAGIC %sql select * from sample.sensordata
 
