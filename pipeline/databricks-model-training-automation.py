@@ -14,10 +14,11 @@ if __name__ == "__main__":
     parser.add_argument('--tenant-id', type=str, dest="tenant_id")
     parser.add_argument('--svc-pr-password', type=str, dest="svc_pr_password")
     parser.add_argument('--repo-id', type=int, dest="repo_id")
-    parser.add_argument('--databricks-host', type=int, dest="databricks_host")
-    parser.add_argument('--cluster-id', type=int, dest="cluster_id")
+    parser.add_argument('--databricks-host', type=str, dest="databricks_host")
+    parser.add_argument('--cluster-id', type=str, dest="cluster_id")
 
     (args, extra_args) = parser.parse_known_args()
+    print('args', args)
 
     token = args.token
     build_id = args.build_id
