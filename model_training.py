@@ -17,6 +17,15 @@ svc_pr_password = dbutils.widgets.get("svc_pr_password")
 
 # COMMAND ----------
 
+print('workspace_name', workspace_name)
+print('subscription_id', subscription_id)
+print('resource_group', resource_group)
+print('service_principal_id', service_principal_id)
+print('tenant_id', tenant_id)
+print('svc_pr_password', svc_pr_password)
+
+# COMMAND ----------
+
 # MAGIC %sql select * from sample.sensordata
 
 # COMMAND ----------
