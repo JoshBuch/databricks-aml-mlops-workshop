@@ -28,7 +28,6 @@ if __name__ == "__main__":
     resource_group = args.resource_group
     service_principal_id = args.service_principal_id
     tenant_id = args.tenant_id
-    svc_pr_password = args.svc_pr_password
     repo_id = args.repo_id
     databricks_host = args.databricks_host
     cluster_id = args.cluster_id
