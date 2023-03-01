@@ -7,6 +7,16 @@ print('this is a live test at 3:33pm Wednesday')
 
 # COMMAND ----------
 
+# COMMAND ----------
+
+workspace_name = dbutils.widgets.get("workspace_name")
+subscription_id = dbutils.widgets.get("subscription_id")
+resource_group = dbutils.widgets.get("resource_group")
+service_principal_id = dbutils.widgets.get("service_principal_id")
+tenant_id = dbutils.widgets.get("tenant_id")
+svc_pr_password = dbutils.widgets.get("svc_pr_password")
+
+
 # MAGIC %sql select * from sample.sensordata
 
 # COMMAND ----------
@@ -112,10 +122,6 @@ from azureml.core import Workspace, Model, Experiment
 import datetime
 import mlflow
 
-workspace_name="learningmain"
-subscription_id =  "dac8073e-1c2d-4a7d-a53b-c3655e291d58"
-resource_group = 'Learning'
-
 # interactive_auth = InteractiveLoginAuthentication(tenant_id="<id>")
 # ws = Workspace(
 #         workspace_name=workspace_name,
@@ -125,11 +131,10 @@ resource_group = 'Learning'
 
 from azureml.core.authentication import ServicePrincipalAuthentication
 
-svc_pr_password = "K5v8Q~XpXfZ.CXR7tLw2hVVBRPZs8HiCcLKRTbvq" # os.environ.get("AZUREML_PASSWORD")
 
 svc_pr = ServicePrincipalAuthentication(
-    tenant_id="16b3c013-d300-468d-ac64-7eda0820b6d3",
-    service_principal_id="09049807-bacc-4ff9-aeed-4ac3a17695f0",
+    tenant_id=tenant_id,
+    service_principal_id=service_principal_id,
     service_principal_password=svc_pr_password)
 
 
@@ -137,8 +142,8 @@ ws = Workspace(
     subscription_id=subscription_id,
     resource_group=resource_group,
     workspace_name=workspace_name,
-    auth=svc_pr
-    )
+    auth=svc_pr)
+
 
 print("Found workspace {} at location {}".format(ws.name, ws.location))
 
@@ -180,5 +185,4 @@ model = Model.register(workspace = ws,
                        model_name="mlopsmodel",
                        model_path = "model.pkl",
                        description = 'Regression Model',
-                       tags={'source': 'databricks'}
-                      )
+                       tags={'source': 'databricks'})
