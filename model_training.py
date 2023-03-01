@@ -13,7 +13,8 @@ subscription_id = dbutils.widgets.get("subscription_id")
 resource_group = dbutils.widgets.get("resource_group")
 service_principal_id = dbutils.widgets.get("service_principal_id")
 tenant_id = dbutils.widgets.get("tenant_id")
-svc_pr_password = dbutils.widgets.get("svc_pr_password")
+adb_secrets_scope= dbutils.widgets.get("adb_secrets_scope")
+adb_sp_secret_key= dbutils.widgets.get("adb_sp_secret_key")
 
 # COMMAND ----------
 
@@ -22,6 +23,12 @@ print('subscription_id', subscription_id)
 print('resource_group', resource_group)
 print('service_principal_id', service_principal_id)
 print('tenant_id', tenant_id)
+print('adb_secrets_scope', adb_secrets_scope)
+print('adb_sp_secret_key', adb_sp_secret_key)
+
+# COMMAND ----------
+
+svc_pr_password = dbutils.secrets.get(scope=adb_secrets_scope, key=adb_sp_secret_key)
 print('svc_pr_password', svc_pr_password)
 
 # COMMAND ----------

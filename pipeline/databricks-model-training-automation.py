@@ -12,10 +12,11 @@ if __name__ == "__main__":
     parser.add_argument('--resource-group', type=str, dest="resource_group")
     parser.add_argument('--service-principal-id', type=str, dest="service_principal_id")
     parser.add_argument('--tenant-id', type=str, dest="tenant_id")
-    parser.add_argument('--svc-pr-password', type=str, dest="svc_pr_password")
     parser.add_argument('--repo-id', type=int, dest="repo_id")
     parser.add_argument('--databricks-host', type=str, dest="databricks_host")
     parser.add_argument('--cluster-id', type=str, dest="cluster_id")
+    parser.add_argument('--adb-secrets-scope', type=str, dest="adb_secrets_scope")
+    parser.add_argument('--adb-sp-secret-key', type=str, dest="adb_sp_secret_key")
 
     (args, extra_args) = parser.parse_known_args()
     print('args', args)
@@ -31,7 +32,8 @@ if __name__ == "__main__":
     repo_id = args.repo_id
     databricks_host = args.databricks_host
     cluster_id = args.cluster_id
-
+    adb_secrets_scope = args.adb_secrets_scope
+    adb_sp_secret_key = args.adb_sp_secret_key
 
     db = DatabricksAPI(
         host=databricks_host,
@@ -43,14 +45,14 @@ if __name__ == "__main__":
         branch='main'
     )
 
-
     params = {
         "workspace_name": workspace_name,
         "subscription_id": subscription_id,
         "resource_group": resource_group,
         "service_principal_id": service_principal_id,
         "tenant_id": tenant_id,
-        "svc_pr_password": svc_pr_password
+        "adb_secrets_scope": adb_secrets_scope,
+        "adb_sp_secret_key": adb_sp_secret_key
     }
 
 
