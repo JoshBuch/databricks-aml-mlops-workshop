@@ -1,6 +1,12 @@
 # databricks-aml-mlops-workshop
 
-## Databricks MLOps Prep Work
+## AML Databricks MLOps Workshop - Hands-on Lab 1
+
+### Step 0: Set up your repo
+- Fork the repo at: [databricks-aml-mlops-workshop](https://github.com/classicboyir/databricks-aml-mlops-workshop)
+- Clone it to your local dev environment
+- Create a repo in your Azure DevOps
+- Push the cloned repo into the new location: `git remote set-url origin <new path>`
 
 ### Step 1: Data lake structure
 Set-up common data lake structure on the datalake
