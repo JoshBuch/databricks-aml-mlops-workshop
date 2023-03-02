@@ -14,6 +14,8 @@ Set-up common data lake structure on the datalake
 * ```delta```: this is where you save the delta tables
 * ```curated```: this is where you can save the ML-ready and ML-predictions datasets
 
+* Download this file: https://workshopamladb.blob.core.windows.net/data/sample_data.csv?sp=r&st=2023-03-02T19:24:24Z&se=2023-03-04T03:24:24Z&spr=https&sv=2021-06-08&sr=b&sig=qKt%2BULUtIwycZVzbIeZb414ZOq9KwZOS03KFajUyNHM%3D
+
 ### Step 2: Databricks
 Create a Databricks cluster with runtime ```10.4 LTS (includes Apache Spark 3.2.1, Scala 2.12)``` and ensure that these two libraries are installed:
 * ```azureml-core```
