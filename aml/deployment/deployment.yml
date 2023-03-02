@@ -1,5 +1,5 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
-name: green
+name: green-1
 endpoint_name: endpoint-workshop
 model: azureml:mlopsmodel:1
 code_configuration:
