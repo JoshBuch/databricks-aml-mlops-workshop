@@ -24,6 +24,7 @@ stages:
     - script: |
         pip install databricks-api
         echo dependancies installed - submitting the job
+        echo key-vault-secret: $(key-vault-secret)
         python pipeline/databricks-model-training-automation.py --token $(adb_token) --build-id $(Build.BuildNumber) --workspace-name $(workspace_name) --subscription-id $(subscription_id) --resource-group $(resource_group) --service-principal-id $(sp_id) --tenant-id $(sp_tenant_id) --adb-secrets-scope $(key-vault-secret) --adb-sp-secret-key $(adb_sp_secret_key_2) --repo-id $(adb_repo_id) --databricks-host $(adb_host) --cluster-id $(cluster_id)
       displayName: 'Model training'
 - stage: ReleaseModelDeployment
