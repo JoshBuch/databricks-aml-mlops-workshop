@@ -43,6 +43,13 @@ Run the delta table and feature engineering / modeling scripts to
 - Select "User Settings"
 - Generate new token (save it somewhere as you can't see it again)
 
+`ADB KeyVault`
+- Go to: `https://<databricks-instance>#secrets/createScope`
+- Set `Scope name`: `key-vault-secret`
+- Select `All Users` for Manae Principle
+- Paste DNS Name from your Key Vault Path
+
+
 
 ### Step 4: Azure DevOps
 See the example DevOps pipeline for how to create a model training and model deployment pipeline. Here is a really good example for using the Databricks APIs: https://github.com/crflynn/databricks-api
