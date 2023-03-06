@@ -193,7 +193,7 @@ import pickle, os
 
 print("Now we use Azure ML to register model in AML registry")
 try:
-    pickle.dump(model, open('/model.pkl', 'wb'))
+    pickle.dump(model, open('/tmp/model.pkl', 'wb'))
     os.chdir('/')
 except:
     pickle.dump(model, open('model.pkl', 'wb'))
