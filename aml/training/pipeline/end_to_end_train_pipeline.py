@@ -1,6 +1,5 @@
 import os
 import azureml.core
-import pandas as pd
 from azureml.core.runconfig import JarLibrary
 from azureml.core.compute import ComputeTarget, DatabricksCompute
 from azureml.exceptions import ComputeTargetException
