@@ -23,7 +23,7 @@ print("SDK version:", azureml.core.VERSION)
 
 def register_dataset(ws, datastore, dataset_name):
     remote_path = f'dataset-demo/{dataset_name}/'
-    local_path = './data/titanic.csv'
+    local_path = 'aml/training/pipeline/data/titanic.csv'
     datastore.upload_files(files = [local_path],
                     target_path = remote_path,
                     overwrite = True,
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     ds_step_1_train = PipelineData("output_train", datastore=def_blob_store).as_dataset()
     ds_step_1_test = PipelineData("output_test", datastore=def_blob_store).as_dataset()
 
-    source_directory = "./scripts"
+    source_directory = "aml/training/pipeline/scripts"
 
     databricks_script_name = "adb_run_automl.py"
 
