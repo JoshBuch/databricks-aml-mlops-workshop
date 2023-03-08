@@ -84,7 +84,7 @@ stages:
 
 
 - stage: ReleaseModelDeployment
-  dependsOn: BuildModelTraining
+  # dependsOn: BuildModelTraining
   jobs:
   - job: ReleaseModelDeployment
 
