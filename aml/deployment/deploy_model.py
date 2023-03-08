@@ -35,6 +35,7 @@ if __name__ == "__main__":
     online_endpoint_name = "endpoint-" + datetime.datetime.now().strftime("%m%d%H%M%f")
 
     # create an online endpoint
+    print("Creating endpoint")
     endpoint = ManagedOnlineEndpoint(
         name=online_endpoint_name,
         description="endpoint for mlops workshop",
@@ -43,13 +44,16 @@ if __name__ == "__main__":
     )
 
     ml_client.online_endpoints.begin_create_or_update(endpoint).result()
+    print("Endpoint created")
 
 
     model = Model(path=model_name)
-    env = Environment(name='AzureML-AutoML:latest')
-    #     conda_file="model-1/environment/conda.yml",
-    #     image="mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest",
-    # )
+    model = list(ml_client.models.list(model_name))[0]
+    env = Environment(
+        #image="mcr.microsoft.com/azureml/curated/azureml-automl-dnn-text-gpu:56",
+        image="mcr.microsoft.com/azureml/curated/azureml-automl:latest"
+    )
+    print("Deployment sarted")
 
     blue_deployment = ManagedOnlineDeployment(
         name="blue",
@@ -57,9 +61,12 @@ if __name__ == "__main__":
         model=model,
         environment=env,
         code_configuration=CodeConfiguration(
-            code="aml/deployment/scoring/score-ext.py", scoring_script="score-ext"
+            code="aml/deployment/scoring", scoring_script="score-ext.py"
         ),
         instance_type="Standard_E2s_v3",
         instance_count=1,
     )
 
+    ml_client.online_deployments.begin_create_or_update(blue_deployment).result()
+
+    print("Deployment complete")
