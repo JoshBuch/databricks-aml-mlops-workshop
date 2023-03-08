@@ -23,13 +23,13 @@ steps:
     versionSpec: '3.8'
     addToPath: true
     architecture: 'x64'
-    scriptSource: 'inline'
-    script: |
-      az account show
-      pip install azureml-core
-      pip install azureml-pipeline-core
-      pip install azureml-pipeline-steps
-      python aml/training/pipeline/main.py
+    
+- script: |
+    az account show
+    pip install azureml-core
+    pip install azureml-pipeline-core
+    pip install azureml-pipeline-steps
+    python aml/training/pipeline/main.py
 
 # stages:
 # - stage: BuildModelTraining
