@@ -31,6 +31,7 @@ steps:
     inlineScript: |
       az account show
       pip install azureml-sdk
+      pip install dotnetcore2
       python aml/training/pipeline/end_to_end_train_pipeline.py --workspace-name $(workspace_name) --subscription-id $(subscription_id) --resource-group $(resource_group) --adb-attached-compute-name $(adb_attached_compute_name) --cluster-id $(cluster_id) --aml-train-cluster-id $(aml_train_cluster_id) --aml-register-cluster-id  $(aml_register_cluster_id)
 
 # stages:
