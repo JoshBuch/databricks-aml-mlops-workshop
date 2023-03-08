@@ -14,4 +14,6 @@ def init():
 
 def run(raw_data):
     data = json.loads(raw_data)["data"]
-    return data.tolist()
+    data = numpy.array(data).reshape(-1, 1)
+    result = model.predict(data)
+    return result.tolist()
