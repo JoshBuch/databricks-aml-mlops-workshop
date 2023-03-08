@@ -19,17 +19,21 @@ steps:
 
 - task: UsePythonVersion@0
   inputs:
-    azureSubscription: 'final-day-sp-connecion'
     versionSpec: '3.8'
     addToPath: true
     architecture: 'x64'
-    
-- script: |
-    az account show
-    pip install azureml-core
-    pip install azureml-pipeline-core
-    pip install azureml-pipeline-steps
-    python aml/training/pipeline/main.py
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'final-day-sp-connecion'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az account show
+      pip install azureml-core
+      pip install azureml-pipeline-core
+      pip install azureml-pipeline-steps
+      python aml/training/pipeline/main.py
 
 # stages:
 # - stage: BuildModelTraining
