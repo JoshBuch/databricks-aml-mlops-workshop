@@ -47,4 +47,5 @@ if __name__ == "__main__":
     pipeline = Pipeline(workspace=ws, steps=steps)
     pipeline.validate()
 
-    Experiment(ws, "PIPELINE_MAIN_Run").submit(pipeline)
+    pipeline_run = Experiment(ws, "PIPELINE_MAIN_Run").submit(pipeline)
+    pipeline_run.wait_for_completion()
