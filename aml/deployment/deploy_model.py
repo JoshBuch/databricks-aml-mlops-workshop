@@ -46,10 +46,10 @@ if __name__ == "__main__":
 
 
     model = Model(path=model_name)
-    env = Environment(
-        conda_file="model-1/environment/conda.yml",
-        image="mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest",
-    )
+    env = Environment(name='AzureML-AutoML:latest')
+    #     conda_file="model-1/environment/conda.yml",
+    #     image="mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest",
+    # )
 
     blue_deployment = ManagedOnlineDeployment(
         name="blue",
@@ -63,4 +63,3 @@ if __name__ == "__main__":
         instance_count=1,
     )
 
-    
