@@ -57,8 +57,10 @@ if __name__ == "__main__":
         model=model,
         environment=env,
         code_configuration=CodeConfiguration(
-            code="model-1/onlinescoring", scoring_script="score.py"
+            code="aml/deployment/scoring/score-ext.py", scoring_script="score-ext"
         ),
-        instance_type="Standard_DS3_v2",
+        instance_type="Standard_E2s_v3",
         instance_count=1,
     )
+
+    
