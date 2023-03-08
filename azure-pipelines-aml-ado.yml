@@ -1,4 +1,5 @@
-trigger: none
+trigger:
+ - main
 
 variables:
 - group: 'mlops-workshop'
@@ -13,7 +14,8 @@ steps:
     azureSubscription: 'final-day-sp-connecion'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az group list -o table'
+    inlineScript: |
+      az group list -o table
         
 
 # stages:
