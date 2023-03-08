@@ -34,47 +34,68 @@ steps:
       pip install azureml-pipeline-steps
       python aml/training/pipeline/main.py --workspace-name $(workspace_name) --subscription-id $(subscription_id) --resource-group $(resource_group)
 
-# stages:
-# - stage: BuildModelTraining
-#   jobs:
-#   - job: BuildModelTraining
+stages:
+- stage: BuildModelTraining
+  jobs:
+  - job: BuildModelTraining
 
-#     pool:
-#       vmImage: ubuntu-latest
+    pool:
+      vmImage: ubuntu-latest
 
-#     steps:
+    steps:
 
-#     - task: UsePythonVersion@0
-#       inputs:
-#         versionSpec: '3.8'
-#         addToPath: true
-#         architecture: 'x64'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'final-day-sp-connecion'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az group list -o table
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.8'
+        addToPath: true
+        architecture: 'x64'
+
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'final-day-sp-connecion'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az account show
+          pip install azureml-core
+          pip install azureml-pipeline-core
+          pip install azureml-pipeline-steps
+          python aml/training/pipeline/main.py --workspace-name $(workspace_name) --subscription-id $(subscription_id) --resource-group $(resource_group)
+        displayName: 'Model training'
 
 #     - script: |
 #         az login --service-principal  --username $(sp_id) --password $(sp_secret) --tenant $(sp_tenant_id)
 #         az account show
-
+# 
 #         pip install azureml-core
 #         pip install azureml-pipeline-core
 #         pip install azureml-pipeline-steps
-
+# 
 #         python aml/training/pipeline/main.py
 #       displayName: 'Model training'
 
 
-# - stage: ReleaseModelDeployment
-#   dependsOn: BuildModelTraining
-#   jobs:
-#   - job: ReleaseModelDeployment
+- stage: ReleaseModelDeployment
+  dependsOn: BuildModelTraining
+  jobs:
+  - job: ReleaseModelDeployment
 
-#     pool:
-#       vmImage: ubuntu-latest
+    pool:
+      vmImage: ubuntu-latest
 
-#     steps:
-#     - script: |
-#         az login
-#         az extension add -n ml
-#         az account set -s "Workload1"
-#         az configure --defaults workspace=amlhudua group=mlops
-#         az ml online-endpoint update  -f aml/deployment/endpoint.yml
-#         az ml online-deployment update  -f aml/deployment/deployment.yml
+    steps:
+    - script: |
+        az login
+        az extension add -n ml
+        az account set -s "Workload1"
+        az configure --defaults workspace=amlhudua group=mlops
+        az ml online-endpoint update  -f aml/deployment/endpoint.yml
+        az ml online-deployment update  -f aml/deployment/deployment.yml
