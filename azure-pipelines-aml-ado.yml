@@ -17,9 +17,12 @@ steps:
     inlineScript: |
       az group list -o table
 
-- task: PythonScript@0
+- task: UsePythonVersion@0
   inputs:
     azureSubscription: 'final-day-sp-connecion'
+    versionSpec: '3.8'
+    addToPath: true
+    architecture: 'x64'
     scriptSource: 'inline'
     script: |
       az account show
@@ -27,7 +30,6 @@ steps:
       pip install azureml-pipeline-core
       pip install azureml-pipeline-steps
       python aml/training/pipeline/main.py
-    pythonInterpreter: '3.8'
 
 # stages:
 # - stage: BuildModelTraining
