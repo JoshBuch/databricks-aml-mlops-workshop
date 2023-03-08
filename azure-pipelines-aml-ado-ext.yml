@@ -1,4 +1,5 @@
-trigger: none
+trigger:
+ - main
 
 variables:
 - group: 'mlops-workshop'
@@ -29,10 +30,8 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       az account show
-      pip install azureml-core
-      pip install azureml-pipeline-core
-      pip install azureml-pipeline-steps
-      python aml/training/pipeline/main.py
+      pip install azureml-sdk
+      python aml/training/pipeline/end_to_end_pipeline.py --workspace-name $(workspace_name) --subscription-id $(subscription_id) --resource-group $(resource_group) --adb-attached-compute-name $(adb_attached_compute_name) --cluster-id $(cluster_id) --aml-train-cluster-id $(hd-cluster) --aml-register-cluster-id  $(small-cluster)
 
 # stages:
 # - stage: BuildModelTraining
