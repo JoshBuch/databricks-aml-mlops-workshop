@@ -2,33 +2,46 @@ trigger: none
 
 variables:
 - group: 'mlops-workshop'
+- group: 'mlops-workshop-keyvault'
 
-stages:
-- stage: BuildModelTraining
-  jobs:
-  - job: BuildModelTraining
+pool:
+    vmImage: ubuntu-latest
 
-    pool:
-      vmImage: ubuntu-latest
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'final-day-sp-connecion'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az group list -o table'
+        
 
-    steps:
+# stages:
+# - stage: BuildModelTraining
+#   jobs:
+#   - job: BuildModelTraining
 
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '3.8'
-        addToPath: true
-        architecture: 'x64'
+#     pool:
+#       vmImage: ubuntu-latest
 
-    - script: |
-        az login --service-principal  --username $(sp_id) --password $(sp_secret) --tenant $(sp_tenant_id)
-        az account show
+#     steps:
 
-        pip install azureml-core
-        pip install azureml-pipeline-core
-        pip install azureml-pipeline-steps
+#     - task: UsePythonVersion@0
+#       inputs:
+#         versionSpec: '3.8'
+#         addToPath: true
+#         architecture: 'x64'
 
-        python aml/training/pipeline/main.py
-      displayName: 'Model training'
+#     - script: |
+#         az login --service-principal  --username $(sp_id) --password $(sp_secret) --tenant $(sp_tenant_id)
+#         az account show
+
+#         pip install azureml-core
+#         pip install azureml-pipeline-core
+#         pip install azureml-pipeline-steps
+
+#         python aml/training/pipeline/main.py
+#       displayName: 'Model training'
 
 
 # - stage: ReleaseModelDeployment

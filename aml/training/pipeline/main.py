@@ -37,4 +37,4 @@ steps = StepSequence(steps = [run_step])
 pipeline = Pipeline(workspace=ws, steps=steps)
 pipeline.validate()
 
-Experiment(ws, "PIPELINE_MAIN_Run").submit(pipeline, regenerate_outputs=True)
+Experiment(ws, "PIPELINE_MAIN_Run").submit(pipeline)
