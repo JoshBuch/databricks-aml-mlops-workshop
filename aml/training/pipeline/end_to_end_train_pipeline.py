@@ -63,6 +63,7 @@ if __name__ == "__main__":
     parser.add_argument('--aml-train-cluster-id', type=str, dest="aml_train_cluster_id")
     parser.add_argument('--aml-register-cluster-id', type=str, dest="aml_register_cluster_id")
     parser.add_argument('--p-endpoint-name', type=str, dest="p_endpoint_name")
+    parser.add_argument('--model-name', type=str, dest="model_name")
     
     (args, extra_args) = parser.parse_known_args()
     print('args', args)
@@ -75,6 +76,7 @@ if __name__ == "__main__":
     aml_register_cluster_id = args.aml_register_cluster_id
     adb_attached_compute_name = args.adb_attached_compute_name
     p_endpoint_name = args.p_endpoint_name
+    model_name = args.model_name
 
     ws = Workspace(subscription_id, resource_group, workspace_name)
 
@@ -178,7 +180,7 @@ if __name__ == "__main__":
                                                 # ds_step_1_test.parse_parquet_files().as_named_input('input_test')],
                                         compute_target=reg_compute_target,
                                         arguments=["--saved-model", model_data,
-                                                    '--model-name' , 'titanic_model',
+                                                    '--model-name' , model_name,
                                                     '--target-col', target_col,
                                                     '--featureset-name-train', feature_dataset_name_train,
                                                     '--featureset-name-test', feature_dataset_name_test],

@@ -31,49 +31,6 @@ steps:
     inlineScript: |
       az account show
       pip install azureml-sdk
-      python aml/training/pipeline/end_to_end_train_pipeline.py --workspace-name $(workspace_name) --subscription-id $(subscription_id) --resource-group $(resource_group) --adb-attached-compute-name $(adb_attached_compute_name) --cluster-id $(cluster_id) --aml-train-cluster-id $(aml_train_cluster_id) --aml-register-cluster-id  $(aml_register_cluster_id) --p-endpoint-name $(aml_p_endpoint_name)
+      python aml/training/pipeline/end_to_end_train_pipeline.py --workspace-name $(workspace_name) --subscription-id $(subscription_id) --resource-group $(resource_group) --adb-attached-compute-name $(adb_attached_compute_name) --cluster-id $(cluster_id) --aml-train-cluster-id $(aml_train_cluster_id) --aml-register-cluster-id  $(aml_register_cluster_id) --p-endpoint-name $(aml_p_endpoint_name) --model-name $(model_name)
     displayName: 'Pipeline Run'
-# stages:
-# - stage: BuildModelTraining
-#   jobs:
-#   - job: BuildModelTraining
 
-#     pool:
-#       vmImage: ubuntu-latest
-
-#     steps:
-
-#     - task: UsePythonVersion@0
-#       inputs:
-#         versionSpec: '3.8'
-#         addToPath: true
-#         architecture: 'x64'
-
-#     - script: |
-#         az login --service-principal  --username $(sp_id) --password $(sp_secret) --tenant $(sp_tenant_id)
-#         az account show
-
-#         pip install azureml-core
-#         pip install azureml-pipeline-core
-#         pip install azureml-pipeline-steps
-
-#         python aml/training/pipeline/main.py
-#       displayName: 'Model training'
-
-
-# - stage: ReleaseModelDeployment
-#   dependsOn: BuildModelTraining
-#   jobs:
-#   - job: ReleaseModelDeployment
-
-#     pool:
-#       vmImage: ubuntu-latest
-
-#     steps:
-#     - script: |
-#         az login
-#         az extension add -n ml
-#         az account set -s "Workload1"
-#         az configure --defaults workspace=amlhudua group=mlops
-#         az ml online-endpoint update  -f aml/deployment/endpoint.yml
-#         az ml online-deployment update  -f aml/deployment/deployment.yml
