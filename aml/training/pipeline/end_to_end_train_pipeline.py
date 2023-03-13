@@ -78,6 +78,8 @@ if __name__ == "__main__":
     feature_dataset_name_train = "feature_titanic_train"
     feature_dataset_name_test = "feature_titanic_test"
 
+    target_col = 'Survived'
+
     dbNbStep = DatabricksStep(
         name="ADB_Feature_Eng",
         outputs=[ds_step_1_train, ds_step_1_test],
@@ -86,6 +88,7 @@ if __name__ == "__main__":
         python_script_params=["--feature_set_1", ds_titanic_1.name,
                             "--feature_set_2", ds_titanic_2.name,
                             "--feature_set_3", ds_titanic_3.name,
+                            '--target-col', target_col,
                             '--output_datastore_name', def_blob_store.name,
                             "--output_train_feature_set_name", feature_dataset_name_train, 
                             "--output_test_feature_set_name", feature_dataset_name_test],
@@ -113,7 +116,7 @@ if __name__ == "__main__":
                                 featurization = 'auto',
                                 training_data = ds_step_1_train.parse_parquet_files(),
                                 test_data = ds_step_1_test.parse_parquet_files(),
-                                label_column_name = 'Survived',
+                                label_column_name = target_col,
                                 **automl_settings)
                                 
     print("AutoML config created.")
@@ -141,7 +144,7 @@ if __name__ == "__main__":
     reg_compute_target = ComputeTarget(workspace=ws, name=reg_comp_name)
 
     conda_dep = CondaDependencies()
-    conda_dep.add_pip_package("azureml-sdk")
+    conda_dep.add_pip_package("azureml-sdk[automl]")
 
     rcfg = RunConfiguration(conda_dependencies=conda_dep)
 
@@ -152,9 +155,10 @@ if __name__ == "__main__":
                                                 # ds_step_1_train.parse_parquet_files().as_named_input('input_train'), 
                                                 # ds_step_1_test.parse_parquet_files().as_named_input('input_test')],
                                         compute_target=reg_compute_target,
-                                        arguments=["--saved-model", model_data, 
-                                                    '--model-name' , 'titanic_model', 
-                                                    '--featureset-name-train', feature_dataset_name_train, 
+                                        arguments=["--saved-model", model_data,
+                                                    '--model-name' , 'titanic_model',
+                                                    '--target-col', target_col,
+                                                    '--featureset-name-train', feature_dataset_name_train,
                                                     '--featureset-name-test', feature_dataset_name_test],
                                         allow_reuse=True,
                                         runconfig=rcfg)

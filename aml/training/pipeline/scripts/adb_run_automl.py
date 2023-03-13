@@ -149,7 +149,7 @@ if __name__ == "__main__":
   preped_data = prep_data(pdf_all)
 
   # adding a unique ID to meet Databricks Feature Store requirement
-  preped_data['id'] = preped_data.apply(lambda _: uuid.uuid4().hex, axis=1)
+  # preped_data['id'] = preped_data.apply(lambda _: uuid.uuid4().hex, axis=1)
     
   X_train, X_test, y_train, y_test = train_test_split(
     preped_data.drop('Survived', axis=1), preped_data['Survived'], stratify=preped_data['Survived'],

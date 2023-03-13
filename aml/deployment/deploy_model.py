@@ -32,7 +32,7 @@ if __name__ == "__main__":
         DefaultAzureCredential(), subscription_id, resource_group, workspace_name
     )
 
-    online_endpoint_name = "endpoint-" + datetime.datetime.now().strftime("%m%d%H%M%f")
+    online_endpoint_name = "endpoint-workshop"
 
     # create an online endpoint
     print("Creating endpoint")
@@ -55,6 +55,7 @@ if __name__ == "__main__":
     )
     print("Deployment sarted")
 
+    deployment_name = 'deployment-' + datetime.datetime.now().strftime("%m%d%H%M%f")
     blue_deployment = ManagedOnlineDeployment(
         name="blue",
         endpoint_name=online_endpoint_name,
