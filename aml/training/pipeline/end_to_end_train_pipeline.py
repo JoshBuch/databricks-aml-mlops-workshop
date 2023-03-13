@@ -1,20 +1,16 @@
 import os
 import azureml.core
-from azureml.core.runconfig import JarLibrary
 from azureml.core.compute import ComputeTarget, DatabricksCompute
-from azureml.exceptions import ComputeTargetException
-from azureml.core import Workspace, Environment, Experiment, Datastore, Dataset, ScriptRunConfig
+from azureml.core import Workspace, Experiment, Dataset
 from azureml.pipeline.core import Pipeline, PipelineData, TrainingOutput
 from azureml.pipeline.steps import DatabricksStep, PythonScriptStep
-from azureml.core.datastore import Datastore
-from azureml.data.data_reference import DataReference
 from azureml.core.conda_dependencies import CondaDependencies
 from azureml.train.automl import AutoMLConfig
 from azureml.pipeline.core import PipelineData, TrainingOutput
 from azureml.pipeline.steps import AutoMLStep
 from azureml.core.runconfig import RunConfiguration
-from azureml.pipeline.core import PipelineParameter
-from azureml.pipeline.core.pipeline_output_dataset import PipelineOutputAbstractDataset
+from azureml.pipeline.core import PipelineEndpoint
+
 import argparse
 import os
 
@@ -33,6 +29,30 @@ def register_dataset(ws, datastore, dataset_name):
     dataset = dataset.register(ws, name=dataset_name, create_new_version=True)
     return dataset
 
+
+def create_published_pipeline(pipeline):
+    from datetime import datetime
+
+    pipeline_name = 'published_titanic' + datetime.now().strftime('%m-%d-%Y-%H-%M')
+
+    published_pipeline = pipeline.publish(
+    name=pipeline_name, 
+    description=pipeline_name)
+
+    return published_pipeline
+
+
+def publish_pipeline_endpoint(endpoint_name, published_pipeline):
+    try:
+        p_endpoint = PipelineEndpoint.get(workspace=ws, name=endpoint_name)
+        print('Pipeline endpoint already exists - adding to the default pipeline')
+        p_endpoint.add_default(published_pipeline)
+        return p_endpoint
+    except:
+        print('Creating new pipeline endpoint')
+        p_endpoint = PipelineEndpoint.publish(workspace=ws, name=endpoint_name, pipeline=published_pipeline, description='')
+        return p_endpoint
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--workspace-name', type=str, dest="workspace_name")
@@ -42,6 +62,7 @@ if __name__ == "__main__":
     parser.add_argument('--cluster-id', type=str, dest="adb_cluster_id")
     parser.add_argument('--aml-train-cluster-id', type=str, dest="aml_train_cluster_id")
     parser.add_argument('--aml-register-cluster-id', type=str, dest="aml_register_cluster_id")
+    parser.add_argument('--p-endpoint-name', type=str, dest="p_endpoint_name")
     
     (args, extra_args) = parser.parse_known_args()
     print('args', args)
@@ -53,6 +74,7 @@ if __name__ == "__main__":
     aml_train_cluster_id = args.aml_train_cluster_id
     aml_register_cluster_id = args.aml_register_cluster_id
     adb_attached_compute_name = args.adb_attached_compute_name
+    p_endpoint_name = args.p_endpoint_name
 
     ws = Workspace(subscription_id, resource_group, workspace_name)
 
@@ -165,4 +187,7 @@ if __name__ == "__main__":
 
     steps = [dbNbStep, train_automlStep, register_model_step]
     pipeline = Pipeline(workspace=ws, steps=steps)
-    pipeline_run = Experiment(ws, 'DB_FeatureStore_AutoML_Register').submit(pipeline)
+    pipeline_run = Experiment(ws, 'DB_AutoML_Register').submit(pipeline)
+
+    published_pipeline = create_published_pipeline(pipeline)
+    publish_pipeline_endpoint(p_endpoint_name, published_pipeline)
