@@ -11,7 +11,7 @@ def init():
     model_path = os.path.join(
         os.getenv("AZUREML_MODEL_DIR"), "model/model_data"
     )
-    pf = pd.read_csv(os.getenv("AZUREML_MODEL_DIR"), "model/sample_data.csv")
+    pf = pd.read_csv(os.path.join(os.getenv("AZUREML_MODEL_DIR"), "model/sample_data.csv"))
     columns = pf.columns
     # deserialize the model file back into a sklearn model
     # model = pickle.load(open(model_path,'rb'))

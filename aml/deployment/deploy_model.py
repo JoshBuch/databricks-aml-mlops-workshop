@@ -18,6 +18,8 @@ if __name__ == "__main__":
     parser.add_argument('--subscription-id', type=str, dest="subscription_id")
     parser.add_argument('--resource-group', type=str, dest="resource_group")
     parser.add_argument('--model-name', type=str, dest="model_name")
+    parser.add_argument('--endpoint-name', type=str, dest="endpoint_name")
+    parser.add_argument('--online-endpoint-compute-type', type=str, dest="online_endpoint_compute_type", default='Standard_E2s_v3')
     
     (args, extra_args) = parser.parse_known_args()
 
@@ -26,18 +28,18 @@ if __name__ == "__main__":
     subscription_id = args.subscription_id
     resource_group = args.resource_group
     model_name = args.model_name
+    endpoint_name = args.endpoint_name
+    online_endpoint_compute_type = args.online_endpoint_compute_type
 
     # get a handle to the workspace
     ml_client = MLClient(
         DefaultAzureCredential(), subscription_id, resource_group, workspace_name
     )
 
-    online_endpoint_name = "endpoint-workshop"
-
     # create an online endpoint
     print("Creating endpoint")
     endpoint = ManagedOnlineEndpoint(
-        name=online_endpoint_name,
+        name=endpoint_name,
         description="endpoint for mlops workshop",
         auth_mode="key",
         tags={"foo": "bar"},
@@ -57,14 +59,14 @@ if __name__ == "__main__":
 
     deployment_name = 'deployment-' + datetime.datetime.now().strftime("%m%d%H%M%f")
     blue_deployment = ManagedOnlineDeployment(
-        name="blue",
-        endpoint_name=online_endpoint_name,
+        name=deployment_name,
+        endpoint_name=endpoint_name,
         model=model,
         environment=env,
         code_configuration=CodeConfiguration(
             code="aml/deployment/scoring", scoring_script="score-ext.py"
         ),
-        instance_type="Standard_E2s_v3",
+        instance_type=online_endpoint_compute_type,
         instance_count=1,
     )
 
