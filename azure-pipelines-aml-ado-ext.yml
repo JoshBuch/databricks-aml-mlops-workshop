@@ -26,17 +26,17 @@ steps:
 #       python aml/training/pipeline/end_to_end_train_pipeline.py --workspace-name $(workspace_name) --subscription-id $(subscription_id) --resource-group $(resource_group) --adb-attached-compute-name $(adb_attached_compute_name) --cluster-id $(cluster_id) --aml-train-cluster-id $(aml_train_cluster_id) --aml-register-cluster-id  $(aml_register_cluster_id) --p-endpoint-name $(aml_p_endpoint_name) --model-name $(model_name)
 #     displayName: 'Pipeline Run'
 
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: 'final-day-sp-connecion'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      az account show
-      pip install azure-identity
-      pip install azure-ai-ml
-      python aml/deployment/deploy_model.py --workspace-name $(workspace_name) --resource-group $(resource_group) --subscription-id $(subscription_id) --model-name $(model_name)  --endpoint-name $(aml_p_endpoint_name) --online-endpoint-compute-type $(aml_online_endpoint_compute_type)
-    displayName: 'Deploy Model'
+# - task: AzureCLI@2
+#   inputs:
+#     azureSubscription: 'final-day-sp-connecion'
+#     scriptType: 'bash'
+#     scriptLocation: 'inlineScript'
+#     inlineScript: |
+#       az account show
+#       pip install azure-identity
+#       pip install azure-ai-ml
+#       python aml/deployment/deploy_model.py --workspace-name $(workspace_name) --resource-group $(resource_group) --subscription-id $(subscription_id) --model-name $(model_name)  --endpoint-name $(aml_p_endpoint_name) --online-endpoint-compute-type $(aml_online_endpoint_compute_type)
+#     displayName: 'Deploy Model'
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
