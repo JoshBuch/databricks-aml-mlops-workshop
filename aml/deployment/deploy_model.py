@@ -12,6 +12,18 @@ from azure.ai.ml.entities import (
 from azure.identity import DefaultAzureCredential
 import datetime
 
+def test_deployment(online_endpoint_name, deploy_name, sample_file):
+    result_raw = ml_client.online_endpoints.invoke(
+        endpoint_name=online_endpoint_name,
+        deployment_name=deploy_name,
+        request_file=sample_file)
+
+    print(f'test result raw: {result_raw}')
+    result = list(eval(result_raw))
+    print(f'test result: {result}')
+
+    return len(result) > 0
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--workspace-name', type=str, dest="workspace_name")
@@ -72,4 +84,15 @@ if __name__ == "__main__":
 
     ml_client.online_deployments.begin_create_or_update(blue_deployment).result()
 
+    is_success = test_deployment(endpoint_name, deployment_name, 'aml/deployment/scoring/sample-data-ext.json')
+    print(f'Testing the deployment is completed')
+    
+    if is_success:
+        print(f'Testing of the deployment is SUCCESSFUL')
+        endpoint.traffic = {deployment_name: 100}
+        ml_client.begin_create_or_update(endpoint)
+        print(f'Traffic allocation is set to 100% for deployment [{deployment_name}]')
+    else:
+        raise SystemExit("The test of the deployment was not successful")
     print("Deployment complete")
+    
