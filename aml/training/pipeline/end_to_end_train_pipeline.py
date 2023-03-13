@@ -193,3 +193,5 @@ if __name__ == "__main__":
 
     published_pipeline = create_published_pipeline(pipeline)
     publish_pipeline_endpoint(p_endpoint_name, published_pipeline)
+
+    pipeline_run.wait_for_completion()
